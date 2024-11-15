@@ -1,8 +1,6 @@
 package com.liang.ladataplatform.process.form;
 
-import com.aspose.words.CssStyleSheetType;
-import com.aspose.words.Document;
-import com.aspose.words.HtmlSaveOptions;
+import com.aspose.words.*;
 import com.liang.ladataplatform.common.CommonResponse;
 import com.liang.ladataplatform.util.WordUtil;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +28,7 @@ public class FormController {
         HtmlSaveOptions htmlSaveOptions = new HtmlSaveOptions();
         // 严格模式
         htmlSaveOptions.setExportXhtmlTransitional(true);
+        htmlSaveOptions.setHtmlVersion(HtmlVersion.HTML_5);
         htmlSaveOptions.setExportImagesAsBase64(true);
         htmlSaveOptions.setCssStyleSheetType(CssStyleSheetType.INLINE);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
