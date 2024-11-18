@@ -1,5 +1,6 @@
 package com.liang.ladataplatform.config.file;
 
+import com.liang.ladataplatform.common.CommonResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class FileController {
     private IFileManager fileManager;
 
     @PostMapping("/upload")
-    public String upload(@NotBlank String path, @NotNull MultipartFile file) throws Exception {
-        return fileManager.uploadFile(path, file.getOriginalFilename(), file.getInputStream());
+    public CommonResponse<String> upload(@NotBlank String path, @NotNull MultipartFile file) throws Exception {
+        return CommonResponse.success(fileManager.uploadFile(path, file.getOriginalFilename(), file.getInputStream()));
     }
 }
