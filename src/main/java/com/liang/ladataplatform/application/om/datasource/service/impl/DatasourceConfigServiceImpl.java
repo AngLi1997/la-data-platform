@@ -1,6 +1,6 @@
-package com.liang.ladataplatform.om.datasource.service.impl;
+package com.liang.ladataplatform.application.om.datasource.service.impl;
 
-import com.liang.ladataplatform.om.datasource.service.IDatasourceConfigService;
+import com.liang.ladataplatform.application.om.datasource.service.IDatasourceConfigService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,4 +1,4 @@
-package com.liang.ladataplatform.om.datasource.service;
+package com.liang.ladataplatform.application.om.datasource.service;
 
 /**
  * @author liang

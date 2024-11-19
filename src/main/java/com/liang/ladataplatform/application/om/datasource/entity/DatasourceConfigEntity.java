@@ -1,4 +1,4 @@
-package com.liang.ladataplatform.om.datasource.entity;
+package com.liang.ladataplatform.application.om.datasource.entity;
 
 import com.liang.ladataplatform.config.mybatis.BaseEntity;
 import lombok.Data;

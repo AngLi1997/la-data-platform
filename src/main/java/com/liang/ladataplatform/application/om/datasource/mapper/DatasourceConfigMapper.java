@@ -1,7 +1,7 @@
-package com.liang.ladataplatform.om.datasource.mapper;
+package com.liang.ladataplatform.application.om.datasource.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.liang.ladataplatform.om.datasource.entity.DatasourceConfigEntity;
+import com.liang.ladataplatform.application.om.datasource.entity.DatasourceConfigEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
