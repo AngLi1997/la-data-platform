@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2024/11/18 15:32
  */
 @Data
-public class DatabaseTypeVO {
+public class DatabaseDriverVO {
 
     private Long id;
 

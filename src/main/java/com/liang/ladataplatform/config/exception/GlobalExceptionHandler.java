@@ -2,10 +2,15 @@ package com.liang.ladataplatform.config.exception;
 
 import com.liang.ladataplatform.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author liang
@@ -20,6 +25,18 @@ public class GlobalExceptionHandler {
     public CommonResponse<String> handleValidationException(ConstraintViolationException e) {
         log.error("参数校验失败", e);
         return CommonResponse.failed(e.getMessage());
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public CommonResponse<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("参数校验失败", e);
+        List<String> errorList = new ArrayList<>();
+        e.getBindingResult().getAllErrors().forEach(err -> {
+            String fieldName = ((FieldError) err).getField();
+            String errorMessage = err.getDefaultMessage();
+            errorList.add(fieldName + errorMessage);
+        });
+        return CommonResponse.failed(Strings.join(errorList, ','));
     }
 
     @ExceptionHandler(value = BusinessFailedException.class)

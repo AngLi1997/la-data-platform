@@ -25,6 +25,10 @@ public class CommonResponse<T> {
         this.msg = msg;
     }
 
+    public static <T> CommonResponse<T> success() {
+        return new CommonResponse<>(200, "成功");
+    }
+
     public static <T> CommonResponse<T> success(T data) {
         return new CommonResponse<>(200, "成功", data);
     }
