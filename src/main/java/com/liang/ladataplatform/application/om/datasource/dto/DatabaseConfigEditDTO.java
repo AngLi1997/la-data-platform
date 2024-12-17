@@ -1,4 +1,4 @@
-package com.liang.ladataplatform.application.om.datasource;
+package com.liang.ladataplatform.application.om.datasource.dto;
 
 import com.liang.ladataplatform.application.om.datasource.enums.DatabaseStatus;
 import lombok.Data;
@@ -10,10 +10,13 @@ import javax.validation.constraints.NotNull;
 /**
  * @author liang
  * @version 1.0.0
- * @date 2024/11/27 14:18
+ * @date 2024/12/17 15:44
  */
 @Data
-public class DatabaseConfigCreateDTO {
+public class DatabaseConfigEditDTO {
+
+    @NotNull
+    private Long id;
 
     @NotBlank
     @Length(max = 100)

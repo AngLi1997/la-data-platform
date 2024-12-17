@@ -34,7 +34,7 @@ public class DatabaseConfigVO {
 
     private String remark;
 
-    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 
-    private String createUser;
+    private String updateUser;
 }

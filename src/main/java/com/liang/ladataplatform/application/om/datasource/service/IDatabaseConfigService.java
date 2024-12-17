@@ -1,6 +1,7 @@
 package com.liang.ladataplatform.application.om.datasource.service;
 
-import com.liang.ladataplatform.application.om.datasource.DatabaseConfigCreateDTO;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigCreateDTO;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigEditDTO;
 import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigPageQuery;
 import com.liang.ladataplatform.application.om.datasource.vo.DatabaseConfigVO;
 
@@ -18,4 +19,14 @@ public interface IDatabaseConfigService {
     List<DatabaseConfigVO> queryDatabaseConfigList(DatabaseConfigPageQuery query);
 
     void deleteDatabaseConfig(Long databaseId);
+
+    /**
+     * 测试连接
+     * @param databaseId
+     */
+    Boolean testConnect(Long databaseId);
+
+    DatabaseConfigVO queryDatabaseConfigDetail(Long databaseId);
+
+    void editDatabaseConfig(DatabaseConfigEditDTO dto);
 }

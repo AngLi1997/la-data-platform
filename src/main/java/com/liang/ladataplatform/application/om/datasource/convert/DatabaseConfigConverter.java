@@ -20,8 +20,8 @@ public interface DatabaseConfigConverter {
 
     DatabaseConfigConverter INSTANCE = Mappers.getMapper(DatabaseConfigConverter.class);
 
-    @Mapping(target = "databaseType", expression = "java(entity.getType().getName())")
-    @Mapping(target = "status", expression = "java(entity.getStatus().getName())")
+    @Mapping(target = "databaseType", expression = "java(entity.getType().name())")
+    @Mapping(target = "status", expression = "java(entity.getStatus().name())")
     DatabaseConfigVO convertToVO(DatabaseConfigEntity entity);
 
     List<DatabaseConfigVO> convertToVO(List<DatabaseConfigEntity> entityList);

@@ -1,6 +1,7 @@
 package com.liang.ladataplatform.application.om.datasource.controller;
 
-import com.liang.ladataplatform.application.om.datasource.DatabaseConfigCreateDTO;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigCreateDTO;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigEditDTO;
 import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigPageQuery;
 import com.liang.ladataplatform.application.om.datasource.service.IDatabaseConfigService;
 import com.liang.ladataplatform.application.om.datasource.vo.DatabaseConfigVO;
@@ -29,14 +30,30 @@ public class DatabaseConfigController {
         return CommonResponse.success();
     }
 
+    @PostMapping("/edit")
+    public CommonResponse<Void> editDatabaseConfig(@Validated @RequestBody DatabaseConfigEditDTO dto) {
+        databaseConfigService.editDatabaseConfig(dto);
+        return CommonResponse.success();
+    }
+
     @PostMapping("/list")
     public CommonResponse<List<DatabaseConfigVO>> queryDatabaseConfigList(@Validated @RequestBody DatabaseConfigPageQuery query) {
         return CommonResponse.success(databaseConfigService.queryDatabaseConfigList(query));
     }
 
     @DeleteMapping("/delete")
-    public CommonResponse<List<DatabaseConfigVO>> deleteDatabaseConfig(@Validated @RequestParam Long databaseId) {
+    public CommonResponse<Void> deleteDatabaseConfig(@Validated @RequestParam Long databaseId) {
         databaseConfigService.deleteDatabaseConfig(databaseId);
         return CommonResponse.success();
+    }
+
+    @GetMapping("/detail")
+    public CommonResponse<DatabaseConfigVO> queryDatabaseConfigDetail(@Validated @RequestParam Long databaseId) {
+        return CommonResponse.success(databaseConfigService.queryDatabaseConfigDetail(databaseId));
+    }
+
+    @GetMapping("/testConnect")
+    public CommonResponse<Boolean> testConnect(@Validated @RequestParam Long databaseId) {
+        return CommonResponse.success(databaseConfigService.testConnect(databaseId));
     }
 }

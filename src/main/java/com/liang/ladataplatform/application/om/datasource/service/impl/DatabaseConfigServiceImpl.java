@@ -1,7 +1,8 @@
 package com.liang.ladataplatform.application.om.datasource.service.impl;
 
-import com.liang.ladataplatform.application.om.datasource.DatabaseConfigCreateDTO;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigCreateDTO;
 import com.liang.ladataplatform.application.om.datasource.convert.DatabaseConfigConverter;
+import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigEditDTO;
 import com.liang.ladataplatform.application.om.datasource.dto.DatabaseConfigPageQuery;
 import com.liang.ladataplatform.application.om.datasource.entity.DatabaseConfigEntity;
 import com.liang.ladataplatform.application.om.datasource.entity.DatabaseDriverEntity;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,5 +65,48 @@ public class DatabaseConfigServiceImpl implements IDatabaseConfigService {
             throw new BusinessFailedException("数据库配置不存在");
         }
         databaseConfigMapper.deleteById(databaseId);
+    }
+
+    @Override
+    public Boolean testConnect(Long databaseId) {
+        DatabaseConfigEntity config = databaseConfigMapper.selectById(databaseId);
+        if (config != null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public DatabaseConfigVO queryDatabaseConfigDetail(Long databaseId) {
+        DatabaseConfigEntity config = databaseConfigMapper.selectById(databaseId);
+        if (config == null){
+            throw new BusinessFailedException("数据库配置不存在");
+        }
+        return DatabaseConfigConverter.INSTANCE.convertToVO(config);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void editDatabaseConfig(DatabaseConfigEditDTO dto) {
+        DatabaseConfigEntity config = databaseConfigMapper.selectById(dto.getId());
+        if (config == null){
+            throw new BusinessFailedException("数据库配置不存在");
+        }
+        DatabaseDriverEntity driver = databaseDriverMapper.selectById(dto.getDatabaseDriverId());
+        if (driver == null){
+            throw new BusinessFailedException("数据库驱动不存在");
+        }
+        config.setDatabaseName(dto.getDatabaseName());
+        config.setDatabaseDriverId(driver.getId());
+        config.setType(driver.getType());
+        config.setHost(dto.getHost());
+        config.setPort(dto.getPort());
+        config.setSchemaName(dto.getSchemaName());
+        config.setUsername(dto.getUsername());
+        config.setPassword(dto.getPassword());
+        config.setStatus(dto.getStatus());
+        config.setRemark(dto.getRemark());
+
+        databaseConfigMapper.updateById(config);
     }
 }
