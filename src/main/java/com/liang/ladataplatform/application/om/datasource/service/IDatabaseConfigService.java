@@ -24,7 +24,7 @@ public interface IDatabaseConfigService {
      * 测试连接
      * @param databaseId
      */
-    Boolean testConnect(Long databaseId);
+    void testConnect(Long databaseId);
 
     DatabaseConfigVO queryDatabaseConfigDetail(Long databaseId);
 

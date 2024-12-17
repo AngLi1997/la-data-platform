@@ -53,7 +53,8 @@ public class DatabaseConfigController {
     }
 
     @GetMapping("/testConnect")
-    public CommonResponse<Boolean> testConnect(@Validated @RequestParam Long databaseId) {
-        return CommonResponse.success(databaseConfigService.testConnect(databaseId));
+    public CommonResponse<Void> testConnect(@Validated @RequestParam Long databaseId) {
+        databaseConfigService.testConnect(databaseId);
+        return CommonResponse.success();
     }
 }

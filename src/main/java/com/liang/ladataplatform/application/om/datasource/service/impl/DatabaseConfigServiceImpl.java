@@ -11,10 +11,15 @@ import com.liang.ladataplatform.application.om.datasource.mapper.IDatabaseDriver
 import com.liang.ladataplatform.application.om.datasource.service.IDatabaseConfigService;
 import com.liang.ladataplatform.application.om.datasource.vo.DatabaseConfigVO;
 import com.liang.ladataplatform.config.exception.BusinessFailedException;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.List;
 
 /**
@@ -68,12 +73,37 @@ public class DatabaseConfigServiceImpl implements IDatabaseConfigService {
     }
 
     @Override
-    public Boolean testConnect(Long databaseId) {
+    public void testConnect(Long databaseId) {
+        String template = "jdbc:mysql://%s:%s/%s";
         DatabaseConfigEntity config = databaseConfigMapper.selectById(databaseId);
-        if (config != null){
-            return true;
+        if (config == null){
+            throw new BusinessFailedException("数据库配置不存在");
         }
-        return false;
+        String host = config.getHost();
+        Integer port = config.getPort();
+        String schemaName = config.getSchemaName();
+        String username = config.getUsername();
+        String password = config.getPassword();
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(String.format(template, host, port, schemaName), username, password);
+        } catch (SQLException e) {
+            if (e instanceof CommunicationsException){
+                throw new BusinessFailedException("数据库连接失败:通信失败");
+            } if (e instanceof SQLSyntaxErrorException){
+                throw new BusinessFailedException("数据库连接失败:数据库["+schemaName+"]不存在");
+            }else {
+                e.printStackTrace();
+            }
+        }finally {
+            if (connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @Override
